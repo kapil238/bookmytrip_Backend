@@ -5,6 +5,7 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/authRoutes');
 const carRoutes = require('./routes/carRoutes');
+const flightRoutes = require('./routes/flightRoutes');
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/car', carRoutes);
+app.use('/api/bookmytrip/flight', flightRoutes);
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
