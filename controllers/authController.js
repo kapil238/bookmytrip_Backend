@@ -36,15 +36,16 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '1d' }
     );
+
+    const roleMessage = user.role === 'admin' ? 'Admin logged in successfully' : 'User logged in successfully';
+
     res.json({ 
+      message: roleMessage,
       token, 
-      user: { 
-        id: user._id, 
-        username: user.name, 
-        role: user.role
-      }
+      user: { id: user._id, name: user.name, role: user.role }
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
