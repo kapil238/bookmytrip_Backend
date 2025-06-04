@@ -9,6 +9,7 @@ const flightRoutes = require('./routes/flightRoutes');
 const hotelRouters = require('./routes/hotelRoutes');
 const tourPackageRoutes = require('./routes/tourPackageRoutes');
 const topFlightRoutes = require('./routes/topFlightRoutes');
+const offerRoutes = require('./routes/offerRoutes');
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use('/api/bookmytrip/flight', flightRoutes);
 app.use('/api/bookmytrip/hotel', hotelRouters);
 app.use('/api/bookmytrip/tourpackage', tourPackageRoutes);
 app.use('/api/bookmytrip/topflight', topFlightRoutes);
+app.use('/api/bookmytrip/offer', offerRoutes);
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
