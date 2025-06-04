@@ -8,7 +8,7 @@ const hotelSchema = new mongoose.Schema({
   category: String,
   price: String,
   rating: String,
-  imgSrc: String,
+  image: String,
   amenities: String,
   nearby: String,
 });

@@ -10,7 +10,7 @@ const carSchema = new mongoose.Schema({
   unit: String,
   luggage: String,
   seats: String,
-  imgSrc: String,
+  image: String,
 });
 
 module.exports = mongoose.model('Car', carSchema);

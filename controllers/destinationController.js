@@ -2,32 +2,38 @@ const Destination = require("../models/Destination");
 
 exports.addDestination = async (req, res) => {
   try {
-    const requiredFields = ({ name, location, price, image } = req.body);
-    if (
-      !requiredFields.name ||
-      !requiredFields.location ||
-      !requiredFields.price ||
-      !requiredFields.image
-    ) {
-      return res.status(400).json({ error: "All fields are required" });
+    const { name, location, price } = req.body;
+
+    if (!name || !location || !price) {
+      return res.status(400).json({ error: "Name, location, and price are required" });
     }
 
-    const exaitingDestination = await Destination.findOne({
-      name: req.body.name,
-    });
-    if (exaitingDestination) {
+    if (!req.file) {
+      return res.status(400).json({ error: "Image file is required" });
+    }
+
+    const existingDestination = await Destination.findOne({ name });
+    if (existingDestination) {
       return res.status(400).json({ error: "Destination already exists" });
     }
 
-    const destination = new Destination(req.body);
+    const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+
+    const destination = new Destination({
+      name,
+      location,
+      price,
+      image: imageUrl,
+    });
+
     await destination.save();
-    res
-      .status(201)
-      .json({ message: "Destination added successfully", destination });
+
+    res.status(201).json({ message: "Destination added successfully", destination });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 
 exports.updateDestination = async (req, res) => {
   try {

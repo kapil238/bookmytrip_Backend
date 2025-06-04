@@ -7,7 +7,7 @@ const tourPackageSchema = new mongoose.Schema({
   type: String,
   category: String,
   price: String,
-  imgSrc: String,
+  image: String,
   highlights: String,
   visit: String,
 });

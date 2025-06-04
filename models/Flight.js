@@ -9,7 +9,7 @@ const flightSchema = new mongoose.Schema({
   departure: String,
   arrival: String,
   price: String,
-  imgSrc: String,
+  image: String,
   offerText: String,
   badgeText: String,
   flightType: String,
