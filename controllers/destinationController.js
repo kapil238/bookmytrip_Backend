@@ -5,7 +5,9 @@ exports.addDestination = async (req, res) => {
     const { name, location, price } = req.body;
 
     if (!name || !location || !price) {
-      return res.status(400).json({ error: "Name, location, and price are required" });
+      return res
+        .status(400)
+        .json({ error: "Name, location, and price are required" });
     }
 
     if (!req.file) {
@@ -16,8 +18,9 @@ exports.addDestination = async (req, res) => {
     if (existingDestination) {
       return res.status(400).json({ error: "Destination already exists" });
     }
-
-    const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    const imageUrl = req.file
+      ? `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
+      : "";
 
     const destination = new Destination({
       name,
@@ -28,12 +31,13 @@ exports.addDestination = async (req, res) => {
 
     await destination.save();
 
-    res.status(201).json({ message: "Destination added successfully", destination });
+    res
+      .status(201)
+      .json({ message: "Destination added successfully", destination });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
-
 
 exports.updateDestination = async (req, res) => {
   try {
@@ -93,7 +97,7 @@ exports.getDestinationById = async (req, res) => {
     if (!req.params.id) {
       return res.status(400).json({ error: "Destination ID is required" });
     }
-    
+
     const destinationID = await Destination.findById(req.params.id);
     if (!destinationID) {
       return res.status(404).json({ error: "Destination not found" });

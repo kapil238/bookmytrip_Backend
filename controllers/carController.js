@@ -14,6 +14,10 @@ exports.addCar = async (req, res) => {
       seats,
     } = req.body;
 
+    const imageUrl = req.file
+      ? `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
+      : "";
+
     const car = new Car({
       cartype,
       name,
@@ -24,16 +28,15 @@ exports.addCar = async (req, res) => {
       unit,
       luggage,
       seats,
-      image: req.file ? `http://localhost:5000/uploads/${req.file.filename}` : '',
+      image: imageUrl,
     });
 
     await car.save();
-    res.status(201).json({ message: 'Car added successfully', car });
+    res.status(201).json({ message: "Car added successfully", car });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
-
 
 exports.updateCar = async (req, res) => {
   try {
